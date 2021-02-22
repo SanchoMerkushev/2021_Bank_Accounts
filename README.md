@@ -3,4 +3,6 @@ Repository for the project of a system of information on accounts of bank client
 
 Workshop on web technologies
 
-MSU Computer Science spring 2021
+MSU Computer Science
+
+spring 2021
