@@ -1,5 +1,7 @@
 # 2021_Bank_Accounts
 Repository for the project of a system of information on accounts of bank clients
+Практикум по Web-технологиям
+
 
 Workshop on web technologies
 
