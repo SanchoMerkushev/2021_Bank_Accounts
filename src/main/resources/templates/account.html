@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+</head>
+<body>
+
+<a id="rootLink" href="/">Root</a><br>
+<a id="accountsList" href="/accountsList">Accounts list</a>
+<a id="clientsList" href="/clientsList">Clients list</a>
+<a id="departmentsList" href="/departmentsList">Departments list</a><br>
+
+<span th:text="${msg != null} ? ${msg}"></span><br><br>
+
+
+<form action="/accountSave" method="get">
+    <input type="hidden" name="accountID" th:value="${account.getAccountID()}"/>
+
+    <label for="selectClient">Choose a client:</label><br>
+    <select id="selectClient" name="clientID" size="5" required>
+        <option th:each="client : ${clients}"
+                th:value="${client.getClientID()}"
+                th:text="${client.getClientName()}"
+                th:selected="${client.getClientID() == selectedClientId}">
+        </option>
+    </select><br><br>
+
+    <label for="selectCreditType">Choose a credit type:</label><br>
+    <select id="selectCreditType" name="creditTypeID" size="5" required>
+        <option th:each="creditType : ${creditTypes}"
+                th:value="${creditType.getCreditTypeID()}"
+                th:text="${creditType.getCreditName()}"
+                th:selected="${creditType.getCreditTypeID() == selectedCreditTypeId}">
+        </option>
+    </select><br><br>
+
+    <label for="selectDepartment">Choose a department:</label><br>
+    <select id="selectDepartment" name="departmentID" size="5" required>
+        <option th:each="department : ${departments}"
+                th:value="${department.getDepartmentID()}"
+                th:text="${department.getAddress()}"
+                th:selected="${department.getDepartmentID() == selectedDepartmentId}">
+        </option>
+    </select><br><br>
+
+    <label for="balance">Balance:</label>
+    <input type="text" id="balance" name="balance" required th:value="${account.getBalance()}"><br><br>
+
+    <span th:if="${!isAccountNew}">
+        <span th:text="'Balance change: ' + ${account.getLastChange()}" id="lastChange"> </span><br>
+        <span th:text="'Credit type: ' + ${account.getCreditType().getCreditName()}"> </span><br>
+        <span th:text="'Credit limit: ' + ${account.getCreditType().getCreditLimit ()}"> </span><br>
+        <span th:text="'Credit period: ' + ${account.getCreditType().getCreditPeriod()}"> </span><br>
+        <span th:text="'Credit interest rate: ' + ${account.getCreditType().getInterestRate()}"> </span><br>
+        <span th:text="'Credit fine frequency: ' + ${account.getCreditType().getFineFrequency()}"> </span><br><br>
+    </span>
+    <input id="submitButton" type="submit" value="Submit">
+</form>
+
+<br>
+<form method="get" action="/accountDelete">
+    <input type="hidden" name="accountID" th:value="${account.getAccountID()}"/>
+    <button id="deleteButton" type="submit">Delete this account</button>
+</form>
+
+</body>
+</html>

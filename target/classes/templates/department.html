@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department</title>
+</head>
+<body>
+
+<a id="rootLink" href="/">Root</a><br>
+<a id="accountsList" href="/accountsList">Accounts list</a>
+<a id="clientsList" href="/clientsList">Clients list</a>
+<a id="departmentsList" href="/departmentsList">Departments list</a><br>
+
+<span th:text="${msg != null} ? ${msg}"></span><br><br>
+
+
+<form action="/departmentSave" method="get">
+    <input type="hidden" name="departmentID" th:value="${department.getDepartmentID()}"/>
+
+    <label for="departmentAddress">Department name:</label>
+    <input type="text" id="departmentAddress" name="departmentAddress"
+           required th:value="${department.getAddress()}"><br><br>
+
+    <input id="submitButton" type="submit" value="Submit">
+</form>
+
+<br>
+<form method="get" action="/departmentDelete">
+    <input type="hidden" name="departmentID" th:value="${department.getDepartmentID()}"/>
+    <button id="deleteButton" type="submit">Delete this department</button>
+</form>
+
+</body>
+</html>

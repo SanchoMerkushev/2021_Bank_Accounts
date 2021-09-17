@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>accountsList</title>
+</head>
+<body>
+
+<a id="rootLink" href="/">Root</a><br>
+<a id="accountsList" href="/accountsList">Accounts list</a>
+<a id="clientsList" href="/clientsList">Clients list</a>
+<a id="departmentsList" href="/departmentsList">Departments list</a><br>
+
+<form method="get" action="/account">
+    <button id="accountAddButton" type="submit">Add new account</button>
+</form><br><br>
+
+<form action="/accountsList" method="get">
+    <label for="findClient">Choose accounts of a specific client:</label><br>
+    <select id="findClient" name="findClientID" size="5">
+        <option th:each="client : ${clients}"
+                th:value="${client.getClientID()}"
+                th:text="${client.getClientName()}">
+        </option>
+    </select><br>
+
+    <label for="findCreditType">Choose accounts of a specific client:</label><br>
+    <select id="findCreditType" name="findCreditTypeID" size="5">
+        <option th:each="creditType : ${creditTypes}"
+                th:value="${creditType.getCreditTypeID()}"
+                th:text="${creditType.getCreditName()}">
+        </option>
+    </select><br>
+
+    <label for="findDepartment">Choose accounts of a specific client:</label><br>
+    <select id="findDepartment" name="findDepartmentID" size="5">
+        <option th:each="department : ${departments}"
+                th:value="${department.getDepartmentID()}"
+                th:text="${department.getAddress()}">
+        </option>
+    </select><br><br>
+
+    <label for="findMinBalance">Min balance:</label>
+    <input type="text" id="findMinBalance" name="findMinBalance"><br>
+
+    <label for="findMaxBalance">Max balance:</label>
+    <input type="text" id="findMaxBalance" name="findMaxBalance"><br><br>
+
+    <input id="submitButton" type="submit" value="Find specific accounts">
+</form><br><br>
+
+<table>
+    <tr>
+        <th scope="col"> Account ID</th>
+        <th scope="col"> Client</th>
+        <th scope="col"> Department</th>
+        <th scope="col"> Balance</th>
+        <th scope="col"> Balance change</th>
+        <th scope="col"> Credit type</th>
+        <th scope="col"> </th>
+    </tr>
+    <tbody>
+    <tr th:if="${accounts.empty}">
+        <td colspan="6"> No accounts here</td>
+    </tr>
+    <tr th:each="account : ${accounts}">
+
+        <td><a th:href="'/account?accountID=' + ${account.getAccountID()}"> <span
+                th:text="'accountID=' + ${account.getAccountID()}"> </span> </a></td>
+
+        <td><a th:href="'/client?clientID=' + ${account.getClient().getClientID()}"> <span
+                th:text="${account.getClient().getClientName()}"> </span> </a></td>
+
+        <td><a th:href="'/department?departmentID=' + ${account.getDepartment().getDepartmentID()}"> <span
+                th:text="${account.getDepartment().getAddress()}"> </span> </a></td>
+
+        <td><span th:text="${account.getBalance()}"> </span></td>
+
+        <td><span th:text="${account.getLastChange()}"> </span></td>
+
+        <td><span th:text="${account.getCreditType().getCreditName()}"> </span></td>
+
+        <td>
+            <form method="get" action="/accountDelete">
+                <input type="hidden" name="accountID" th:value="${account.getAccountID()}"/>
+                <button id="deleteButton" type="submit">Delete this account</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

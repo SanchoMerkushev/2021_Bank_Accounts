@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client</title>
+</head>
+<body>
+
+<a id="rootLink" href="/">Root</a><br>
+<a id="accountsList" href="/accountsList">Accounts list</a>
+<a id="clientsList" href="/clientsList">Clients list</a>
+<a id="departmentsList" href="/departmentsList">Departments list</a><br>
+
+<span th:text="${msg != null} ? ${msg}"></span><br><br>
+
+
+<form action="/clientSave" method="get">
+    <input type="hidden" name="clientID" th:value="${client.getClientID()}"/>
+
+    <label for="clientName">Client name:</label>
+    <input type="text" id="clientName" name="clientName" required th:value="${client.getClientName()}"><br><br>
+
+    <label for="clientType">Client type:</label>
+    <input type="text" id="clientType" name="clientType" required th:value="${client.getClientType()}"><br><br>
+
+    <input id="submitButton" type="submit" value="Submit">
+</form>
+
+<br>
+<form method="get" action="/clientDelete">
+    <input type="hidden" name="clientID" th:value="${client.getClientID()}"/>
+    <button id="deleteButton" type="submit">Delete this client</button>
+</form>
+
+</body>
+</html>

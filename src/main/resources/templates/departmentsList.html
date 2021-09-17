@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>departmentsList</title>
+</head>
+<body>
+
+<a id="rootLink" href="/">Root</a><br>
+<a id="accountsList" href="/accountsList">Accounts list</a>
+<a id="clientsList" href="/clientsList">Clients list</a>
+<a id="departmentsList" href="/departmentsList">Departments list</a><br>
+
+<form method="get" action="/department">
+    <button id="departmentAddButton" type="submit">Add new department</button>
+</form><br><br>
+
+<table>
+    <tr>
+        <th scope="col"> Address </th>
+        <th scope="col"> </th>
+    </tr>
+    <tbody>
+    <tr th:if="${departments.empty}">
+        <td colspan="6"> No clients here</td>
+    </tr>
+    <tr th:each="department : ${departments}">
+
+        <td><a th:href="'/department?departmentID=' + ${department.getDepartmentID()}"> <span
+                th:text="${department.getAddress()}"> </span> </a></td>
+
+        <td>
+        <form method="get" action="/departmentDelete">
+            <input type="hidden" name="departmentID" th:value="${department.getDepartmentID()}"/>
+            <button id="deleteButton" type="submit">Delete this department</button>
+        </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

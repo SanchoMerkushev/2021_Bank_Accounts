@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>clientsList</title>
+</head>
+<body>
+
+<a id="rootLink" href="/">Root</a><br>
+<a id="accountsList" href="/accountsList">Accounts list</a>
+<a id="clientsList" href="/clientsList">Clients list</a>
+<a id="departmentsList" href="/departmentsList">Departments list</a><br>
+
+<form method="get" action="/client">
+    <button id="clientAddButton" type="submit">Add new client</button>
+</form><br><br>
+
+<table>
+    <tr>
+        <th scope="col"> Client type</th>
+        <th scope="col"> Name</th>
+        <th scope="col"> </th>
+    </tr>
+    <tbody>
+    <tr th:if="${clients.empty}">
+        <td colspan="6"> No clients here</td>
+    </tr>
+    <tr th:each="client : ${clients}">
+        <td><span th:text="${client.getClientType()}"> </span></td>
+
+        <td><a th:href="'/client?clientID=' + ${client.getClientID()}"> <span
+                th:text="${client.getClientName()}"> </span> </a></td>
+
+        <td>
+            <form method="get" action="/clientDelete">
+                <input type="hidden" name="clientID" th:value="${client.getClientID()}"/>
+                <button id="deleteButton" type="submit">Delete this client</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
